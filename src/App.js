@@ -1,23 +1,102 @@
-import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'
-import './App.css';
-import Home from './Components/Home';
-import ProductList from './Components/ProductsList';
-import Signin from './Components/Signin';
-import Navigator from './Components/Navigator';
+import React from "react";
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
+import "./styles.css";
+import Home from "./Components/Home";
+import ProductList from "./Components/ProductList";
+import Signin from "./Components/Signin";
+import Navigation from "./Components/Navigation";
 
-
-
-export default function App(){
+const ProtectedRoute = ({ Component, username, ...rest }) => {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Navigator/>
-        <Route path="/home" component={Home}></Route>
-        <Route path="/productList" component={ProductList}></Route>
-        <Route path="/signin" component={Signin}></Route>
-      </BrowserRouter>
-      
-    </div>
+    <Route
+      {...rest}
+      //  component={Home}
+      render={props => {
+        if (!username) {
+          return <Redirect to="/signin" />;
+        }
+        return <Component username={username} {...props} />;
+      }}
+    />
   );
+};
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: ""
+    };
+  }
+
+  handleLogin = () => {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    this.setState({
+      username,
+      password
+    });
+  };
+  render() {
+    const { username } = this.state;
+    console.log("Username", this.state.username);
+    return (
+      <div className="App">
+        <BrowserRouter>
+          {/* Links should be defined inside this BrowserRouter */}
+          <Navigation username={username} />
+          {/* <Route
+            exact
+            path="/"
+            //  component={Home}
+            render={props => {
+              if (!username) {
+                return <Redirect to="/signin" />;
+              }
+              return <Home username={username} {...props} />;
+            }}
+          />
+          <Route
+            path="/productslist"
+            // component={ProductList}
+
+            render={props => {
+              if (!username) {
+                return <Redirect to="/signin" />;
+              }
+              return <ProductList username={username} {...props} />;
+            }}
+          /> */}
+          <ProtectedRoute exact path="/" Component={Home} username={username} />
+          <ProtectedRoute
+            exact
+            path="/productslist"
+            Component={ProductList}
+            username={"soal"}
+          />
+          <Route
+            path="/signin"
+            // component={Signin}
+            render={props => {
+              if (username === "soal") {
+                return <Redirect to="/" />;
+              }
+              return (
+                <Signin
+                  username={username}
+                  handleLogin={this.handleLogin}
+                  {...props}
+                />
+              );
+            }}
+          />
+          {/* <Signin handleLogin={this.handleLogin} /> */}
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
+
+export default App;
+

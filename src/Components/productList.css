@@ -1,0 +1,14 @@
+.list-container ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  margin: 0;
+}
+
+.list-container ul li {
+  width: 100px;
+  height: 100px;
+  border: 1px solid;
+  background: green;
+}

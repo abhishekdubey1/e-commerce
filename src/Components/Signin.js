@@ -1,11 +1,22 @@
-import React from 'react';
-
-const Signin = (props) => {
+import React from "react";
+import { Redirect } from "react-router-dom";
+import "./signin.css";
+const Signin = props => {
+  // if (props.username === "soal") {
+  //   return <Redirect to="/" />;
+  // }
   return (
-    <div>
-      Signin
+    <div className="signin-container">
+      <div>
+        <input id="username" />
+        <br></br>
+      </div>
+      <div>
+        <input id="password" type="password" />
+        <button onClick={props.handleLogin}> Signin</button>
+      </div>
     </div>
+  );
+};
 
-  )
-}
 export default Signin;
