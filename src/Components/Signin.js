@@ -8,11 +8,11 @@ const Signin = props => {
   return (
     <div className="signin-container">
       <div>
-        <input id="username" />
+        <input id="username" placeholder="username" />
         <br></br>
       </div>
       <div>
-        <input id="password" type="password" />
+        <input id="password" type="password" placeholder="password" />
         <button onClick={props.handleLogin}> Signin</button>
       </div>
     </div>

@@ -43,31 +43,9 @@ class App extends React.Component {
     console.log("Username", this.state.username);
     return (
       <div className="App">
-        <BrowserRouter>
-          {/* Links should be defined inside this BrowserRouter */}
+        <BrowserRouter>{/*Acts like a parent container*/}
           <Navigation username={username} />
-          {/* <Route
-            exact
-            path="/"
-            //  component={Home}
-            render={props => {
-              if (!username) {
-                return <Redirect to="/signin" />;
-              }
-              return <Home username={username} {...props} />;
-            }}
-          />
-          <Route
-            path="/productslist"
-            // component={ProductList}
-
-            render={props => {
-              if (!username) {
-                return <Redirect to="/signin" />;
-              }
-              return <ProductList username={username} {...props} />;
-            }}
-          /> */}
+          
           <ProtectedRoute exact path="/" Component={Home} username={username} />
           <ProtectedRoute
             exact
